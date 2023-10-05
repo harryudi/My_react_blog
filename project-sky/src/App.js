@@ -12,8 +12,8 @@ function App() {
       <Navbar/>
       <div className="content">
         <Home/>
-        <h1>Awesome + {free} {sol} </h1>
-        <a href={sol}>hasan</a>
+        {/* <h1>Awesome + {free} {sol} </h1>
+        <a href={sol}>hasan</a> */}
       </div>
     </div>
   );

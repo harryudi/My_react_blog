@@ -1,24 +1,20 @@
 import {useState} from 'react';
+import BlogLists from './BlogLists';
 
 
 const Home = () => {
     
-    // let name = "mario";
-    const [name, setName] = useState('Mario');
-    const [age, setAge] =useState('30');
-    const handleClick = () => {
-        setName ('Luiji');
-        setAge (27)
-        console.log(name + ' and age is '+ age );
-    }
+    
+    const [blogs, setBlogs] = useState([
+        {title:'My new webiste blog', body: 'I will be reaching out to each founder personally to extend every information and provide them with the necessary details for the calls. If you require any additional information or assistance in coordinating these interviews, please do not hesitate to reach out to me.', author: 'Maria', id:1 },
+        {title:'My latest blog Content', body: 'I will be reaching out to each founder personally to extend every information and provide them with the necessary details for the calls. If you require any additional information or assistance in coordinating these interviews, please do not hesitate to reach out to me.', author: 'Jane', id:2 },
+        {title:'My Shinny webiste is here', body: 'I will be reaching out to each founder personally to extend every information and provide them with the necessary details for the calls. If you require any additional information or assistance in coordinating these interviews, please do not hesitate to reach out to me.', author: 'Luke', id:3 }
+    ])               
     return (
         <div className="home">
-            <h2>Home Page looks cool !</h2>
-            <p>My name is {name} and I am {age} years old</p>
-            <button onClick={handleClick}>Click me</button>
-            
+            <BlogLists blogsP={blogs} titleP="All Blogs!" />
         </div>
      );
 }
- 
+
 export default Home;
