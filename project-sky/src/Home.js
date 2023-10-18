@@ -28,7 +28,7 @@ const Home = () => {
             {blogs && <BlogLists blogsP={blogs} titleP="All Blogs!" handleDelete={handleDelete}/>}
             <BlogLists blogsP={blogs.filter((blog)=>blog.author==='Maro') } titleP="Maro's Blogs!" />
             <button onClick={()=>{setName('Luigi')}}>CHANGE</button>
-            {/* <h4>{name} is my name</h4> */}
+            <h4>{name} is my name</h4>
         </div>
      );
 }
