@@ -1,25 +1,34 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import BlogLists from './BlogLists';
 
 
 const Home = () => {
     
     
-    const [blogs, setBlogs] = useState([
-        {title:'My new webiste blog', body: 'I will be reaching out to each founder personally to extend every information and provide them with the necessary details for the calls. If you require any additional information or assistance in coordinating these interviews, please do not hesitate to reach out to me.', author: 'Maria', id:1 },
-        {title:'My latest blog Content', body: 'I will be reaching out to each founder personally to extend every information and provide them with the necessary details for the calls. If you require any additional information or assistance in coordinating these interviews, please do not hesitate to reach out to me.', author: 'Jane', id:2 },
-        {title:'My Shinny webiste is here', body: 'I will be reaching out to each founder personally to extend every information and provide them with the necessary details for the calls. If you require any additional information or assistance in coordinating these interviews, please do not hesitate to reach out to me.', author: 'Luke', id:3 },
-        {title:'My Only one blog Content', body: 'I will be reaching out to each founder personally to extend every information and provide them with the necessary details for the calls. If you require any additional information or assistance in coordinating these interviews, please do not hesitate to reach out to me.', author: 'Maria', id:4 }
-    ])               
+    const [blogs, setBlogs] = useState(null)               
 
     const handleDelete = (id) => {
         const newBlogs = blogs.filter (blogs => blogs.id !== id);
         setBlogs(newBlogs);
     }
+    const [name,setName] = useState(blogs.author);
+    
+
+    useEffect(()=>{
+        fetch('http://localhost:8000/Blogs')
+        .then( res => {
+            return res.json();
+        })
+        .then(data => {
+            setBlogs(data)
+        })
+    },[])
     return (
         <div className="home">
-            <BlogLists blogsP={blogs} titleP="All Blogs!" handleDelete={handleDelete} />
-            <BlogLists blogsP={blogs.filter((blog)=>blog.author==='Maria') } titleP="Maria's Blogs!" />
+            {blogs && <BlogLists blogsP={blogs} titleP="All Blogs!" handleDelete={handleDelete}/>}
+            <BlogLists blogsP={blogs.filter((blog)=>blog.author==='Maro') } titleP="Maro's Blogs!" />
+            <button onClick={()=>{setName('Luigi')}}>CHANGE</button>
+            {/* <h4>{name} is my name</h4> */}
         </div>
      );
 }
