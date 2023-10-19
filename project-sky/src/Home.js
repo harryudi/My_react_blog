@@ -4,31 +4,36 @@ import BlogLists from './BlogLists';
 
 const Home = () => {
     
-    
-    const [blogs, setBlogs] = useState(null)               
-
-    const handleDelete = (id) => {
-        const newBlogs = blogs.filter (blogs => blogs.id !== id);
-        setBlogs(newBlogs);
-    }
-    const [name,setName] = useState(blogs.author);
-    
+    const [blogs, setBlogs] = useState(null)
+    const [isPending, setIsPending] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(()=>{
-        fetch('http://localhost:8000/Blogs')
+        setTimeout(()=> {
+            fetch('http://localhost:8000/Blogs')
         .then( res => {
-            return res.json();
+            console.log(res)
+            if (!res.ok) {
+                throw Error ("Could not fetch data");
+            }
+            return res.json(); 
         })
         .then(data => {
-            setBlogs(data)
+            setError(null);
+            setBlogs(data);
+            setIsPending(false);
         })
+        .catch(err => {
+            setIsPending(null);
+            setError(err.message);
+        })
+        }, 1000);
     },[])
     return (
         <div className="home">
-            {blogs && <BlogLists blogsP={blogs} titleP="All Blogs!" handleDelete={handleDelete}/>}
-            <BlogLists blogsP={blogs.filter((blog)=>blog.author==='Maro') } titleP="Maro's Blogs!" />
-            <button onClick={()=>{setName('Luigi')}}>CHANGE</button>
-            <h4>{name} is my name</h4>
+            {blogs && <BlogLists blogsP={blogs} titleP="All Blogs!" />}
+            {isPending && <div className="loading">Loading...</div> }
+            {error && <div>{ error }</div>}
         </div>
      );
 }
