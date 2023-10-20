@@ -1,24 +1,19 @@
-import {useState} from 'react';
+import BlogLists from './BlogLists';
+import useFetch from './useFetch';
 
 
 const Home = () => {
     
-    // let name = "mario";
-    const [name, setName] = useState('Mario');
-    const [age, setAge] =useState('30');
-    const handleClick = () => {
-        setName ('Luiji');
-        setAge (27)
-        console.log(name + ' and age is '+ age );
-    }
+    const {data:blogs, isPending, error } = useFetch("http://localhost:8000/Blogs");
+
+    
     return (
         <div className="home">
-            <h2>Home Page looks cool !</h2>
-            <p>My name is {name} and I am {age} years old</p>
-            <button onClick={handleClick}>Click me</button>
-            
+            {blogs && <BlogLists blogsP={blogs} titleP="All Blogs!" />}
+            {isPending && <div className="loading">Loading...</div> }
+            {error && <div>{ error }</div>}
         </div>
      );
 }
- 
+
 export default Home;
