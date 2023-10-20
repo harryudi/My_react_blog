@@ -2,20 +2,34 @@
 
 import Navbar from './Navbar';
 import Home from './Home';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Create from './Create';
+import BlogDetails from './BlogDetails';
+import ErrorPage from './ErrorPage';
+
 
 function App() {
-  const free = "I feel so free";
-  const sol = "I'm Learning react so fast";
-  const gog = "www.has.com";
+
   return (
+    <Router>
     <div className="App">
       <Navbar/>
       <div className="content">
-        <Home/>
-        {/* <h1>Awesome + {free} {sol} </h1>
-        <a href={sol}>hasan</a> */}
+        <Switch>
+          <Route exact path= "/">
+            <Home />
+          </Route>
+          <Route path= "/create">
+            <Create />
+          </Route>
+          <Route path= "/blogs/:id">
+            <BlogDetails />
+          </Route>
+          <ErrorPage path="*"/>
+        </Switch>
       </div>
     </div>
+    </Router>
   );
 }
 
